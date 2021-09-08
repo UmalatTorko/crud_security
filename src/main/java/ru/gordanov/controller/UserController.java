@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping("/admin/save")
     public String saveUser(@ModelAttribute("user") User user) {
-        service.saveOrUpdate(user);
+        service.save(user);
         return "redirect:/admin";
     }
 
@@ -53,7 +53,7 @@ public class UserController {
 
     @PatchMapping("/admin/update")
     public String update(@ModelAttribute("user") User user) {
-        service.saveOrUpdate(user);
+        service.update(user);
         return "redirect:/admin";
     }
 

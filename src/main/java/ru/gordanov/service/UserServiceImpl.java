@@ -27,9 +27,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveOrUpdate(User user) {
+    public void update(User user) {
+        User userDB = userDao.getUserByUsername(user.getUsername());
+        if (!bCryptPasswordEncoder.matches(userDB.getPassword(), bCryptPasswordEncoder.encode(user.getPassword()))) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        userDao.update(user);
+    }
+
+    @Override
+    public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.saveOrUpdate(user);
+        userDao.save(user);
     }
 
     @Override
@@ -41,7 +50,6 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         userDao.delete(id);
     }
-
 
     @Override
     public User getUserByUsername(String username) {

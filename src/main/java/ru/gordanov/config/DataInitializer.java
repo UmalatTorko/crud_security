@@ -32,7 +32,7 @@ public class DataInitializer {
         user.setUsername("admin");
         user.setPassword("admin");
         user.setRoles(Set.of(roleService.getRoleByName("ROLE_ADMIN"), roleService.getRoleByName("ROLE_USER")));
-        userService.saveOrUpdate(user);
+        userService.save(user);
 
         User user2 = new User();
         user2.setName("User");
@@ -41,6 +41,6 @@ public class DataInitializer {
         user2.setUsername("user");
         user2.setPassword("user");
         user2.setRoles(Set.of(roleService.getRoleByName("ROLE_USER")));
-        userService.saveOrUpdate(user2);
+        userService.save(user2);
     }
 }
