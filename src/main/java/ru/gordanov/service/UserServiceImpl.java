@@ -1,5 +1,6 @@
 package ru.gordanov.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.gordanov.dao.UserDao;
@@ -13,12 +14,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private final UserDao userDao;
 
-    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDao = userDao;
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserDao userDao) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userDao = userDao;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-        User userDB = userDao.getUserByUsername(user.getUsername());
+        User userDB = userDao.getUserById(user.getId());
         if (!bCryptPasswordEncoder.matches(userDB.getPassword(), bCryptPasswordEncoder.encode(user.getPassword()))) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
